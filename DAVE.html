@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DAVE Fragrances</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --pink:#E91E8C;
+  --pink-light:#F06AB0;
+  --pink-pale:#FDE8F4;
+  --pink-dark:#B5146C;
+  --blue:#1565C0;
+  --blue-light:#42A5F5;
+  --blue-pale:#E3F2FD;
+  --blue-dark:#0D47A1;
+  --black:#0A0A0F;
+  --dark:#111118;
+  --card-bg:#16161F;
+  --card-border:#25253A;
+  --white:#FFFFFF;
+  --off-white:#F8F4FF;
+  --text-muted:#8888AA;
+  --accent:#E91E8C;
+}
+body{background:var(--black);color:var(--white);font-family:'Montserrat',sans-serif;min-height:100vh;overflow-x:hidden}
+h1,h2,h3,h4{font-family:'Playfair Display',serif}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--black)}
+::-webkit-scrollbar-thumb{background:var(--pink);border-radius:2px}
+
+nav{position:sticky;top:0;z-index:1000;background:rgba(10,10,15,0.96);backdrop-filter:blur(20px);border-bottom:1px solid rgba(233,30,140,0.2);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:72px}
+.logo{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;background:linear-gradient(135deg,var(--pink),var(--blue-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:4px;cursor:pointer}
+.logo-sub{font-family:'Montserrat',sans-serif;font-size:0.65rem;letter-spacing:3px;color:var(--text-muted);font-weight:400;display:block;margin-top:-4px;-webkit-text-fill-color:var(--text-muted)}
+.nav-links{display:flex;gap:2rem;align-items:center}
+.nav-links a{color:var(--white);text-decoration:none;font-size:0.72rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;transition:color 0.3s;cursor:pointer}
+.nav-links a:hover,.nav-links a.active{color:var(--pink)}
+.nav-icons{display:flex;gap:1.2rem;align-items:center}
+.nav-icon{background:none;border:none;color:var(--white);font-size:1.1rem;cursor:pointer;transition:color 0.3s;position:relative}
+.nav-icon:hover{color:var(--pink)}
+.badge{position:absolute;top:-6px;right:-6px;background:var(--pink);color:var(--white);font-size:0.55rem;font-weight:700;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+
+.page{display:none;animation:fadeIn 0.4s ease}
+.page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+/* HERO */
+.hero{min-height:calc(100vh - 72px);display:flex;align-items:center;position:relative;overflow:hidden;padding:4rem 2rem}
+.hero-bg{position:absolute;inset:0;background:
+  radial-gradient(ellipse at 15% 60%, rgba(233,30,140,0.12) 0%, transparent 55%),
+  radial-gradient(ellipse at 85% 30%, rgba(21,101,192,0.1) 0%, transparent 50%),
+  radial-gradient(ellipse at 50% 90%, rgba(66,165,245,0.06) 0%, transparent 40%)}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(233,30,140,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(21,101,192,0.04) 1px,transparent 1px);background-size:50px 50px}
+.hero-content{position:relative;z-index:1;max-width:580px}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--pink);color:var(--pink);font-size:0.62rem;font-weight:700;letter-spacing:4px;text-transform:uppercase;padding:6px 16px;margin-bottom:1.5rem}
+.hero h1{font-size:clamp(2.8rem,5.5vw,5rem);line-height:1.05;margin-bottom:1.5rem}
+.hero h1 .gradient-text{background:linear-gradient(135deg,var(--pink),var(--blue-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{color:var(--text-muted);font-size:0.88rem;line-height:1.8;max-width:400px;margin-bottom:2.5rem;font-weight:300}
+.btn-primary{background:linear-gradient(135deg,var(--pink),var(--pink-dark));color:var(--white);border:none;padding:14px 36px;font-family:'Montserrat',sans-serif;font-size:0.7rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:all 0.3s;display:inline-block}
+.btn-primary:hover{opacity:0.9;transform:translateY(-2px)}
+.btn-outline{background:none;border:1px solid var(--blue-light);color:var(--blue-light);padding:14px 36px;font-family:'Montserrat',sans-serif;font-size:0.7rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:all 0.3s;margin-left:1rem}
+.btn-outline:hover{background:var(--blue-light);color:var(--black)}
+.hero-visual{position:absolute;right:4%;top:50%;transform:translateY(-50%);width:420px;height:520px;display:flex;align-items:center;justify-content:center}
+.glow-ring{position:absolute;width:300px;height:300px;border:1px solid rgba(233,30,140,0.15);border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%);animation:spin 20s linear infinite}
+.glow-ring2{position:absolute;width:400px;height:400px;border:1px solid rgba(21,101,192,0.1);border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%);animation:spin 35s linear infinite reverse}
+@keyframes spin{from{transform:translate(-50%,-50%) rotate(0)}to{transform:translate(-50%,-50%) rotate(360deg)}}
+.floating-tag{position:absolute;background:rgba(22,22,31,0.92);border:1px solid rgba(233,30,140,0.35);padding:10px 16px;font-size:0.62rem;font-weight:600;letter-spacing:1px;color:var(--pink-light)}
+.floating-tag:first-child{top:10%;left:-10px;animation:float 4s ease-in-out infinite}
+.floating-tag:last-child{bottom:18%;right:-20px;animation:float 4s ease-in-out infinite 2s}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+
+.section-header{text-align:center;margin-bottom:3rem}
+.section-tag{color:var(--pink);font-size:0.62rem;letter-spacing:4px;text-transform:uppercase;margin-bottom:0.8rem}
+.section-title{font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:700;color:var(--white)}
+.section-title .gt{background:linear-gradient(135deg,var(--pink),var(--blue-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.divider{width:60px;height:2px;background:linear-gradient(90deg,transparent,var(--pink),var(--blue-light),transparent);margin:1rem auto}
+
+.categories-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1rem;padding:0 2rem 4rem}
+.cat-card{background:var(--card-bg);border:1px solid var(--card-border);padding:2rem 1.5rem;text-align:center;cursor:pointer;transition:all 0.4s;position:relative;overflow:hidden}
+.cat-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--pink),var(--blue-light));transform:scaleX(0);transition:transform 0.4s}
+.cat-card:hover::after{transform:scaleX(1)}
+.cat-card:hover{border-color:rgba(233,30,140,0.3);transform:translateY(-4px)}
+.cat-icon{font-size:2.4rem;margin-bottom:1rem}
+.cat-name{font-family:'Playfair Display',serif;font-size:1rem;color:var(--white);margin-bottom:0.3rem}
+.cat-count{color:var(--text-muted);font-size:0.68rem;letter-spacing:2px}
+
+.products-section{padding:0 2rem 4rem}
+.products-controls{display:flex;gap:0.8rem;margin-bottom:2rem;flex-wrap:wrap;align-items:center}
+.filter-btn{background:none;border:1px solid var(--card-border);color:var(--text-muted);padding:8px 18px;font-family:'Montserrat',sans-serif;font-size:0.68rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all 0.3s}
+.filter-btn.active{border-color:var(--pink);color:var(--pink);background:rgba(233,30,140,0.08)}
+.filter-btn:hover{border-color:var(--pink);color:var(--pink)}
+.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1.5rem}
+.product-card{background:var(--card-bg);border:1px solid var(--card-border);overflow:hidden;cursor:pointer;transition:all 0.4s;position:relative}
+.product-card:hover{border-color:rgba(233,30,140,0.35);transform:translateY(-6px)}
+.product-img{height:210px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.product-badge{position:absolute;top:12px;left:12px;padding:4px 10px;font-size:0.58rem;font-weight:700;letter-spacing:2px;text-transform:uppercase}
+.badge-new{background:linear-gradient(135deg,var(--pink),var(--pink-dark));color:var(--white)}
+.badge-sale{background:linear-gradient(135deg,var(--blue),var(--blue-light));color:var(--white)}
+.badge-excl{background:linear-gradient(135deg,#1a0030,var(--pink-dark));color:var(--pink-light);border:1px solid var(--pink-dark)}
+.product-info{padding:1.2rem;border-top:1px solid var(--card-border)}
+.product-brand{color:var(--pink);font-size:0.58rem;letter-spacing:3px;text-transform:uppercase;margin-bottom:0.3rem}
+.product-name{font-family:'Playfair Display',serif;font-size:1rem;color:var(--white);margin-bottom:0.3rem}
+.product-desc{color:var(--text-muted);font-size:0.68rem;margin-bottom:1rem;line-height:1.6}
+.product-footer{display:flex;align-items:center;justify-content:space-between}
+.product-price{font-size:1.05rem;font-weight:700;background:linear-gradient(135deg,var(--pink),var(--blue-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.product-price-old{color:var(--text-muted);font-size:0.78rem;text-decoration:line-through;margin-left:6px;-webkit-text-fill-color:var(--text-muted)}
+.add-btn{background:linear-gradient(135deg,var(--pink),var(--pink-dark));border:none;color:var(--white);width:36px;height:36px;font-size:1.1rem;cursor:pointer;transition:all 0.3s;display:flex;align-items:center;justify-content:center;font-weight:700}
+.add-btn:hover{opacity:0.85}
+.wishlist-btn{background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:1rem;transition:color 0.3s;margin-right:6px}
+.wishlist-btn:hover,.wishlist-btn.active{color:var(--pink)}
+
+/* CART */
+.cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:2000;display:none;opacity:0;transition:opacity 0.3s}
+.cart-overlay.open{display:block;opacity:1}
+.cart-sidebar{position:fixed;right:0;top:0;bottom:0;width:400px;background:var(--dark);border-left:1px solid rgba(233,30,140,0.2);z-index:2001;transform:translateX(100%);transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);display:flex;flex-direction:column}
+.cart-sidebar.open{transform:translateX(0)}
+.cart-header{padding:1.5rem 2rem;border-bottom:1px solid var(--card-border);display:flex;align-items:center;justify-content:space-between}
+.cart-title{font-family:'Playfair Display',serif;font-size:1.25rem;background:linear-gradient(135deg,var(--pink),var(--blue-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cart-close{background:none;border:none;color:var(--text-muted);font-size:1.4rem;cursor:pointer;transition:color 0.3s}
+.cart-close:hover{color:var(--white)}
+.cart-items{flex:1;overflow-y:auto;padding:1.5rem 2rem}
+.cart-item{display:flex;gap:1rem;margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--card-border)}
+.cart-item-img{width:65px;height:75px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.cart-item-info{flex:1}
+.cart-item-name{font-family:'Playfair Display',serif;font-size:0.88rem;color:var(--white);margin-bottom:4px}
+.cart-item-price{font-size:0.82rem;font-weight:700;background:linear-gradient(135deg,var(--pink),var(--blue-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cart-qty{display:flex;align-items:center;gap:8px;margin-top:8px}
+.qty-btn{background:var(--card-bg);border:1px solid var(--card-border);color:var(--white);width:26px;height:26px;cursor:pointer;transition:all 0.3s;font-size:0.9rem;display:flex;align-items:center;justify-content:center}
+.qty-btn:hover{border-color:var(--pink);color:var(--pink)}
+.qty-num{font-size:0.82rem;font-weight:600;min-width:18px;text-align:center}
+.remove-btn{background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:0.75rem;margin-left:auto;transition:color 0.3s}
+.remove-btn:hover{color:var(--pink)}
+.cart-footer{padding:1.5rem 2rem;border-top:1px solid var(--card-border)}
+.cart-subtotal{display:flex;justify-content:space-between;margin-bottom:0.5rem;font-size:0.82rem;color:var(--text-muted)}
+.cart-total{display:flex;justify-content:space-between;font-size:1.05rem;font-weight:700;color:var(--white);margin-bottom:1.5rem}
+.cart-total-price{background:linear-gradient(135deg,var(--pink),var(--blue-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+/* MODALS */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,8,0.88);z-index:3000;display:none;align-items:center;justify-content:center;padding:2rem}
+.modal-overlay.open{display:flex}
+.modal{background:var(--dark);border:1px solid rgba(233,30,140,0.2);width:100%;max-width:480px;max-height:90vh;overflow-y:auto;animation:modalIn 0.3s ease}
+@keyframes modalIn{from{opacity:0;transform:scale(0.95) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.modal-header{padding:2rem 2rem 0;text-align:center;position:relative}
+.modal-logo{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:900;background:linear-gradient(135deg,var(--pink),var(--blue-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:4px;margin-bottom:0.4rem}
+.modal-title{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--white)}
+.modal-close{position:absolute;top:1.5rem;right:1.5rem;background:none;border:none;color:var(--text-muted);font-size:1.2rem;cursor:pointer}
+.modal-close:hover{color:var(--white)}
+.modal-body{padding:2rem}
+.form-group{margin-bottom:1.1rem}
+.form-label{display:block;font-size:0.62rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:0.5rem}
+.form-input{width:100%;background:rgba(22,22,31,0.8);border:1px solid var(--card-border);color:var(--white);padding:11px 14px;font-family:'Montserrat',sans-serif;font-size:0.83rem;outline:none;transition:border-color 0.3s}
+.form-input:focus{border-color:var(--pink)}
+.form-input::placeholder{color:rgba(136,136,170,0.4)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.form-divider{text-align:center;color:var(--text-muted);font-size:0.72rem;margin:1.2rem 0;position:relative}
+.form-divider::before{content:'';position:absolute;top:50%;left:0;right:0;height:1px;background:var(--card-border)}
+.form-divider span{position:relative;background:var(--dark);padding:0 1rem}
+.form-link{background:linear-gradient(135deg,var(--pink),var(--blue-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-size:0.8rem;cursor:pointer;text-decoration:none}
+.form-switch{text-align:center;font-size:0.78rem;color:var(--text-muted);margin-top:1rem}
+.social-btn{width:100%;padding:10px;background:var(--card-bg);border:1px solid var(--card-border);color:var(--white);font-family:'Montserrat',sans-serif;font-size:0.72rem;font-weight:600;letter-spacing:1px;cursor:pointer;transition:all 0.3s;display:flex;align-items:center;justify-content:center;gap:0.5rem;margin-bottom:0.8rem}
+.social-btn:hover{border-color:var(--pink);color:var(--pink-light)}
+
+/* CHECKOUT */
+.checkout-steps{display:flex;margin-bottom:2rem}
+.step{flex:1;text-align:center;position:relative}
+.step::after{content:'';position:absolute;top:14px;left:60%;right:-40%;height:1px;background:var(--card-border)}
+.step:last-child::after{display:none}
+.step-num{width:28px;height:28px;border-radius:50%;background:var(--card-bg);border:1px solid var(--card-border);color:var(--text-muted);font-size:0.72rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 0.4rem}
+.step.active .step-num{background:linear-gradient(135deg,var(--pink),var(--pink-dark));border-color:var(--pink);color:var(--white)}
+.step.done .step-num{background:var(--blue-dark);border-color:var(--blue);color:var(--white)}
+.step-label{font-size:0.58rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted)}
+.step.active .step-label{color:var(--pink)}
+
+/* CONTACT */
+.contact-section{padding:4rem 2rem;max-width:920px;margin:0 auto}
+.contact-grid{display:grid;grid-template-columns:1fr 1.5fr;gap:3rem;margin-top:3rem}
+.contact-info-card{background:var(--card-bg);border:1px solid var(--card-border);padding:2rem;border-top:3px solid;border-image:linear-gradient(135deg,var(--pink),var(--blue-light)) 1}
+.contact-info-item{margin-bottom:1.5rem}
+.contact-info-icon{font-size:1.2rem;margin-bottom:0.4rem}
+.contact-info-label{font-size:0.62rem;letter-spacing:2px;text-transform:uppercase;color:var(--pink);margin-bottom:0.3rem}
+.contact-info-text{color:var(--white);font-size:0.87rem}
+.social-links{display:flex;gap:0.8rem;margin-top:1rem}
+.social-link{width:36px;height:36px;border:1px solid var(--card-border);display:flex;align-items:center;justify-content:center;color:var(--text-muted);font-size:0.75rem;font-weight:700;transition:all 0.3s;cursor:pointer}
+.social-link:hover{border-color:var(--pink);color:var(--pink)}
+
+/* CD9 BANNER */
+.cd9-banner{margin:3rem 2rem;background:linear-gradient(135deg,rgba(233,30,140,0.08),rgba(21,101,192,0.1),rgba(66,165,245,0.06));border:1px solid rgba(233,30,140,0.2);padding:2.5rem;position:relative;overflow:hidden;display:flex;align-items:center;gap:2rem}
+.cd9-banner::before{content:'CD9';position:absolute;right:-20px;top:50%;transform:translateY(-50%);font-family:'Playfair Display',serif;font-size:8rem;font-weight:900;background:linear-gradient(135deg,rgba(233,30,140,0.07),rgba(21,101,192,0.07));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;pointer-events:none}
+.cd9-content h3{font-size:1.4rem;color:var(--white);margin-bottom:0.5rem}
+.cd9-content p{color:var(--text-muted);font-size:0.8rem;line-height:1.7}
+.cd9-tags{display:flex;gap:0.5rem;margin-top:1rem;flex-wrap:wrap}
+.cd9-tag{padding:4px 12px;font-size:0.6rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;border:1px solid}
+.cd9-tag.pink{border-color:var(--pink);color:var(--pink)}
+.cd9-tag.blue{border-color:var(--blue-light);color:var(--blue-light)}
+.cd9-tag.white{border-color:rgba(255,255,255,0.3);color:rgba(255,255,255,0.7)}
+
+/* FOOTER */
+footer{background:rgba(10,10,15,0.98);border-top:1px solid rgba(233,30,140,0.15);padding:3rem 2rem 2rem}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2rem;margin-bottom:2rem}
+.footer-brand-logo{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:900;background:linear-gradient(135deg,var(--pink),var(--blue-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:4px;margin-bottom:0.8rem}
+.footer-brand-desc{color:var(--text-muted);font-size:0.76rem;line-height:1.7;max-width:230px}
+.footer-col-title{font-size:0.62rem;letter-spacing:3px;text-transform:uppercase;color:var(--pink);margin-bottom:1rem}
+.footer-link{display:block;color:var(--text-muted);font-size:0.76rem;text-decoration:none;margin-bottom:0.6rem;transition:color 0.3s;cursor:pointer}
+.footer-link:hover{color:var(--white)}
+.footer-bottom{border-top:1px solid var(--card-border);padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center;font-size:0.68rem;color:var(--text-muted)}
+
+/* NEWSLETTER */
+.newsletter{margin:3rem 2rem;text-align:center;padding:3rem 2rem;background:var(--card-bg);border:1px solid rgba(233,30,140,0.15);position:relative;overflow:hidden}
+.newsletter::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(233,30,140,0.05),transparent 70%)}
+.newsletter h3{font-size:1.7rem;color:var(--white);margin-bottom:0.5rem;position:relative}
+.newsletter p{color:var(--text-muted);font-size:0.8rem;margin-bottom:1.5rem;position:relative}
+.newsletter-form{display:flex;max-width:440px;margin:0 auto;position:relative}
+.newsletter-input{flex:1;background:var(--black);border:1px solid var(--card-border);border-right:none;color:var(--white);padding:12px 16px;font-family:'Montserrat',sans-serif;font-size:0.83rem;outline:none;transition:border-color 0.3s}
+.newsletter-input:focus{border-color:var(--pink)}
+.newsletter-input::placeholder{color:rgba(136,136,170,0.4)}
+
+/* PRODUCT DETAIL */
+.product-detail{padding:3rem 2rem;max-width:1000px;margin:0 auto}
+.pd-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+.pd-img{background:var(--card-bg);border:1px solid var(--card-border);height:440px;display:flex;align-items:center;justify-content:center;position:relative}
+.pd-brand{color:var(--pink);font-size:0.62rem;letter-spacing:4px;text-transform:uppercase;margin-bottom:0.5rem}
+.pd-name{font-size:2rem;color:var(--white);margin-bottom:0.5rem}
+.pd-stars{color:var(--pink);font-size:0.85rem;margin-bottom:1rem}
+.pd-price{font-size:2rem;font-weight:700;background:linear-gradient(135deg,var(--pink),var(--blue-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:1.5rem}
+.pd-desc{color:var(--text-muted);font-size:0.83rem;line-height:1.8;margin-bottom:1.5rem}
+.pd-sizes{display:flex;gap:0.8rem;margin-bottom:1.5rem}
+.size-btn{border:1px solid var(--card-border);background:none;color:var(--text-muted);padding:8px 16px;font-family:'Montserrat',sans-serif;font-size:0.68rem;font-weight:600;cursor:pointer;transition:all 0.3s}
+.size-btn.active,.size-btn:hover{border-color:var(--pink);color:var(--pink);background:rgba(233,30,140,0.06)}
+.pd-actions{display:flex;gap:1rem}
+.pd-add-btn{flex:1;background:linear-gradient(135deg,var(--pink),var(--pink-dark));border:none;color:var(--white);padding:14px;font-family:'Montserrat',sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:opacity 0.3s}
+.pd-add-btn:hover{opacity:0.88}
+.pd-notes{display:flex;gap:1.5rem;margin-top:2rem;padding-top:2rem;border-top:1px solid var(--card-border)}
+.pd-note{text-align:center;flex:1}
+.pd-note-icon{font-size:1.3rem;margin-bottom:0.4rem}
+.pd-note-label{font-size:0.62rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);line-height:1.5}
+.back-btn{background:none;border:none;color:var(--pink);font-family:'Montserrat',sans-serif;font-size:0.68rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;gap:0.5rem;margin-bottom:2rem;padding:0}
+
+/* SUCCESS */
+.success-screen{text-align:center;padding:3rem 2rem}
+.success-icon{width:80px;height:80px;background:rgba(233,30,140,0.1);border:2px solid var(--pink);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto 1.5rem}
+.success-title{font-family:'Playfair Display',serif;font-size:1.8rem;background:linear-gradient(135deg,var(--pink),var(--blue-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:0.8rem}
+.success-desc{color:var(--text-muted);font-size:0.83rem;line-height:1.7;max-width:320px;margin:0 auto 2rem}
+.order-id{font-size:0.72rem;letter-spacing:2px;color:var(--text-muted);border:1px solid var(--card-border);display:inline-block;padding:6px 16px}
+
+.notif{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(100px);background:var(--card-bg);border:1px solid var(--pink);color:var(--white);padding:12px 24px;font-size:0.8rem;font-weight:600;z-index:9999;transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);white-space:nowrap}
+.notif.show{transform:translateX(-50%) translateY(0)}
+</style>
+
+<nav>
+  <div onclick="showPage('home')" style="cursor:pointer">
+    <div class="logo">DAVE</div>
+    <div class="logo-sub">Fragrances</div>
+  </div>
+  <div class="nav-links">
+    <a onclick="showPage('home')" id="nav-home" class="active">Inicio</a>
+    <a onclick="showPage('catalog')" id="nav-catalog">Catálogo</a>
+    <a onclick="filterCat('todo');showPage('catalog')" id="nav-cat">Categorías</a>
+    <a onclick="showPage('contact')" id="nav-contact">Contacto</a>
+  </div>
+  <div class="nav-icons">
+    <button class="nav-icon" onclick="openLogin()" title="Mi cuenta">👤</button>
+    <button class="nav-icon" onclick="openCart()" title="Carrito" style="position:relative">
+      🛒<span class="badge" id="cart-count">0</span>
+    </button>
+  </div>
+</nav>
+
+<!-- HOME -->
+<div class="page active" id="page-home">
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+      <div class="hero-tag">✦ Colección Exclusiva 2026</div>
+      <h1>El Arte de la<br><span class="gradient-text">Fragancia</span><br>Perfecta</h1>
+      <p>Inspirado en la energía vibrante de CD9, cada perfume DAVE es una historia de pasión, juventud y elegancia sin límites.</p>
+      <button class="btn-primary" onclick="showPage('catalog')">Explorar Colección</button>
+      <button class="btn-outline" onclick="showPage('catalog')">Ver Novedades</button>
+    </div>
+    <div class="hero-visual">
+      <div class="glow-ring"></div>
+      <div class="glow-ring2"></div>
+      <div class="floating-tag">⭐ TOP SELLER</div>
+      <div id="hero-bottle"></div>
+      <div class="floating-tag" style="bottom:18%;right:-20px;animation:float 4s ease-in-out infinite 2s">🌟 NUEVO</div>
+    </div>
+  </div>
+
+  <div class="cd9-banner">
+    <div style="font-size:3.5rem;flex-shrink:0">🎵</div>
+    <div class="cd9-content">
+      <h3>Inspirado en <span style="background:linear-gradient(135deg,var(--pink),var(--blue-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">CD9</span></h3>
+      <p>La energía, moda y estilo del grupo pop mexicano más icónico, fusionados en cada gota. DAVE Fragrances es para quienes viven sin límites.</p>
+      <div class="cd9-tags">
+        <span class="cd9-tag pink">✦ Lujo Accesible</span>
+        <span class="cd9-tag blue">⚡ Juventud Audaz</span>
+        <span class="cd9-tag white">🌊 Frescura Única</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="padding:0 2rem 1rem">
+    <div class="section-header">
+      <div class="section-tag">✦ Explorar por</div>
+      <h2 class="section-title">Nuestras <span class="gt">Categorías</span></h2>
+      <div class="divider"></div>
+    </div>
+  </div>
+  <div class="categories-grid">
+    <div class="cat-card" onclick="filterCat('hombre')"><div class="cat-icon">👔</div><div class="cat-name">Para Él</div><div class="cat-count">8 Fragancias</div></div>
+    <div class="cat-card" onclick="filterCat('mujer')"><div class="cat-icon">💐</div><div class="cat-name">Para Ella</div><div class="cat-count">10 Fragancias</div></div>
+    <div class="cat-card" onclick="filterCat('unisex')"><div class="cat-icon">✨</div><div class="cat-name">Unisex</div><div class="cat-count">6 Fragancias</div></div>
+    <div class="cat-card" onclick="filterCat('edicion')"><div class="cat-icon">🏆</div><div class="cat-name">Edición Limitada</div><div class="cat-count">4 Fragancias</div></div>
+    <div class="cat-card" onclick="showPage('catalog')"><div class="cat-icon">🎁</div><div class="cat-name">Sets & Regalos</div><div class="cat-count">5 Sets</div></div>
+  </div>
+
+  <div class="products-section">
+    <div class="section-header">
+      <div class="section-tag">✦ Más Vendidos</div>
+      <h2 class="section-title">Colección <span class="gt">Destacada</span></h2>
+      <div class="divider"></div>
+    </div>
+    <div class="products-grid" id="home-products"></div>
+  </div>
+
+  <div class="newsletter">
+    <h3>Únete a la <span style="background:linear-gradient(135deg,var(--pink),var(--blue-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Experiencia DAVE</span></h3>
+    <p>Sé el primero en conocer lanzamientos exclusivos, promociones y el mundo detrás de nuestras fragancias.</p>
+    <div class="newsletter-form">
+      <input class="newsletter-input" type="email" placeholder="tu@email.com">
+      <button class="btn-primary" style="margin:0;padding:12px 24px">Suscribirme</button>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand-logo">DAVE Fragrances</div>
+        <p class="footer-brand-desc">Lujo, esencia y estilo inspirados en la energía del pop mexicano. Cada fragancia es una obra de arte olfativa.</p>
+        <div style="display:flex;gap:0.5rem;margin-top:1.2rem">
+          <div class="social-link">ig</div><div class="social-link">tw</div><div class="social-link">yt</div><div class="social-link">tk</div>
+        </div>
+      </div>
+      <div><div class="footer-col-title">Tienda</div><a class="footer-link" onclick="showPage('catalog')">Catálogo</a><a class="footer-link">Novedades</a><a class="footer-link">Más Vendidos</a><a class="footer-link">Ofertas</a></div>
+      <div><div class="footer-col-title">Ayuda</div><a class="footer-link" onclick="showPage('contact')">Contacto</a><a class="footer-link">Envíos</a><a class="footer-link">Devoluciones</a><a class="footer-link">Guía de Notas</a></div>
+      <div><div class="footer-col-title">Legal</div><a class="footer-link">Privacidad</a><a class="footer-link">Términos</a><a class="footer-link">Cookies</a></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 DAVE Fragrances. Todos los derechos reservados.</span>
+      <span>💳 Visa · Mastercard · OXXO · Stripe</span>
+    </div>
+  </footer>
+</div>
+
+<!-- CATALOG -->
+<div class="page" id="page-catalog">
+  <div style="padding:3rem 2rem 2rem">
+    <div class="section-header">
+      <div class="section-tag">✦ Nuestra Colección</div>
+      <h2 class="section-title">Catálogo <span class="gt">Completo</span></h2>
+      <div class="divider"></div>
+    </div>
+    <div class="products-controls">
+      <button class="filter-btn active" onclick="filterProducts(this,'todo')">Todos</button>
+      <button class="filter-btn" onclick="filterProducts(this,'hombre')">Para Él</button>
+      <button class="filter-btn" onclick="filterProducts(this,'mujer')">Para Ella</button>
+      <button class="filter-btn" onclick="filterProducts(this,'unisex')">Unisex</button>
+      <button class="filter-btn" onclick="filterProducts(this,'edicion')">Edición Limitada</button>
+    </div>
+    <div class="products-grid" id="catalog-products"></div>
+  </div>
+</div>
+
+<!-- PRODUCT DETAIL -->
+<div class="page" id="page-product">
+  <div class="product-detail" id="product-detail-content"></div>
+</div>
+
+<!-- CONTACT -->
+<div class="page" id="page-contact">
+  <div class="contact-section">
+    <div class="section-header">
+      <div class="section-tag">✦ Estamos Para Ti</div>
+      <h2 class="section-title">Habla con <span class="gt">Nosotros</span></h2>
+      <div class="divider"></div>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info-card">
+        <div class="contact-info-item"><div class="contact-info-icon">📍</div><div class="contact-info-label">Dirección</div><div class="contact-info-text">Av. Reforma 500, Puebla, Pue.</div></div>
+        <div class="contact-info-item"><div class="contact-info-icon">📧</div><div class="contact-info-label">Email</div><div class="contact-info-text">michelle@davefragrances.mx</div></div>
+        <div class="contact-info-item"><div class="contact-info-icon">📱</div><div class="contact-info-label">WhatsApp</div><div class="contact-info-text">+52 55 1234 5678</div></div>
+        <div class="contact-info-item"><div class="contact-info-icon">⏰</div><div class="contact-info-label">Horario</div><div class="contact-info-text">Lunes – Sábado: 9am – 8pm</div></div>
+        <div><div class="contact-info-label" style="margin-bottom:0.8rem">Síguenos</div><div class="social-links"><div class="social-link">ig</div><div class="social-link">tw</div><div class="social-link">yt</div><div class="social-link">tk</div></div></div>
+      </div>
+      <div>
+        <div class="form-group"><label class="form-label">Nombre completo</label><input class="form-input" placeholder="Tu nombre"></div>
+        <div class="form-group"><label class="form-label">Correo electrónico</label><input class="form-input" type="email" placeholder="tu@email.com"></div>
+        <div class="form-group"><label class="form-label">Asunto</label>
+          <select class="form-input" style="background:rgba(22,22,31,0.8)"><option>Consulta sobre producto</option><option>Estado de mi pedido</option><option>Devolución o cambio</option><option>Otro</option></select>
+        </div>
+        <div class="form-group"><label class="form-label">Mensaje</label><textarea class="form-input" rows="5" placeholder="¿En qué podemos ayudarte?"></textarea></div>
+        <button class="btn-primary" onclick="showNotif('✅ Mensaje enviado — te contactaremos pronto')">Enviar Mensaje</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CART SIDEBAR -->
+<div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
+<div class="cart-sidebar" id="cart-sidebar">
+  <div class="cart-header">
+    <div class="cart-title">Mi Carrito</div>
+    <button class="cart-close" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cart-items-list"></div>
+  <div class="cart-footer">
+    <div class="cart-subtotal"><span>Subtotal</span><span id="cart-sub">$0.00</span></div>
+    <div class="cart-subtotal"><span>Envío</span><span style="color:#4CAF50">GRATIS</span></div>
+    <div class="cart-total"><span>Total</span><span class="cart-total-price" id="cart-tot">$0.00</span></div>
+    <button class="btn-primary" style="width:100%;text-align:center" onclick="openCheckout()">Proceder al Pago</button>
+    <button class="btn-outline" style="width:100%;text-align:center;margin-left:0;margin-top:0.8rem" onclick="closeCart()">Seguir Comprando</button>
+  </div>
+</div>
+
+<!-- LOGIN MODAL -->
+<div class="modal-overlay" id="login-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <button class="modal-close" onclick="closeLogin()">✕</button>
+      <div class="modal-logo">DAVE</div>
+      <div class="modal-title" id="auth-title">Bienvenido de vuelta</div>
+    </div>
+    <div class="modal-body">
+      <div id="login-form">
+        <div class="form-group"><label class="form-label">Correo electrónico</label><input class="form-input" type="email" placeholder="tu@email.com"></div>
+        <div class="form-group"><label class="form-label">Contraseña</label><input class="form-input" type="password" placeholder="••••••••">
+          <div style="text-align:right;margin-top:6px"><a class="form-link">¿Olvidaste tu contraseña?</a></div>
+        </div>
+        <button class="btn-primary" style="width:100%" onclick="doLogin()">Iniciar Sesión</button>
+        <div class="form-switch">¿No tienes cuenta? <a class="form-link" onclick="showRegister()">Regístrate aquí</a></div>
+      </div>
+      <div id="register-form" style="display:none">
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Nombre</label><input class="form-input" placeholder="Nombre"></div>
+          <div class="form-group"><label class="form-label">Apellido</label><input class="form-input" placeholder="Apellido"></div>
+        </div>
+        <div class="form-group"><label class="form-label">Correo electrónico</label><input class="form-input" type="email" placeholder="tu@email.com"></div>
+        <div class="form-group"><label class="form-label">Contraseña</label><input class="form-input" type="password" placeholder="Mínimo 8 caracteres"></div>
+        <div class="form-group"><label class="form-label">Confirmar contraseña</label><input class="form-input" type="password" placeholder="Repite tu contraseña"></div>
+        <div style="font-size:0.7rem;color:var(--text-muted);margin-bottom:1.2rem">Al registrarte aceptas nuestros <a class="form-link">Términos</a> y <a class="form-link">Política de Privacidad</a></div>
+        <button class="btn-primary" style="width:100%" onclick="doRegister()">Crear Cuenta</button>
+        <div class="form-switch">¿Ya tienes cuenta? <a class="form-link" onclick="showLogin()">Inicia sesión</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CHECKOUT MODAL -->
+<div class="modal-overlay" id="checkout-modal">
+  <div class="modal" style="max-width:620px">
+    <div class="modal-header" style="padding-bottom:1.5rem">
+      <button class="modal-close" onclick="closeCheckout()">✕</button>
+      <div class="modal-logo">DAVE</div>
+      <div class="modal-title">Completar Pedido</div>
+      <div style="margin-top:1.5rem" class="checkout-steps">
+        <div class="step active" id="step1"><div class="step-num">1</div><div class="step-label">Envío</div></div>
+        <div class="step" id="step2"><div class="step-num">2</div><div class="step-label">Pago</div></div>
+        <div class="step" id="step3"><div class="step-num">3</div><div class="step-label">Confirmación</div></div>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div id="checkout-step1">
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Nombre</label><input class="form-input" placeholder="Tu nombre"></div>
+          <div class="form-group"><label class="form-label">Apellido</label><input class="form-input" placeholder="Tu apellido"></div>
+        </div>
+        <div class="form-group"><label class="form-label">Correo electrónico</label><input class="form-input" type="email" placeholder="tu@email.com"></div>
+        <div class="form-group"><label class="form-label">Teléfono</label><input class="form-input" type="tel" placeholder="+52 55 1234 5678"></div>
+        <div class="form-group"><label class="form-label">Dirección de envío</label><input class="form-input" placeholder="Calle y número exterior/interior"></div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Ciudad</label><input class="form-input" placeholder="Ciudad"></div>
+          <div class="form-group"><label class="form-label">Estado</label>
+            <select class="form-input" style="background:rgba(22,22,31,0.8)"><option>Puebla</option><option>Ciudad de México</option><option>Jalisco</option><option>Nuevo León</option><option>Otro</option></select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Código Postal</label><input class="form-input" placeholder="72000"></div>
+          <div class="form-group"><label class="form-label">País</label><input class="form-input" value="México" readonly></div>
+        </div>
+        <button class="btn-primary" style="width:100%" onclick="checkoutNext(2)">Continuar al Pago →</button>
+      </div>
+
+      <div id="checkout-step2" style="display:none">
+        <div style="background:var(--card-bg);border:1px solid var(--card-border);padding:1.2rem;margin-bottom:1.5rem">
+          <div style="font-size:0.65rem;color:var(--text-muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:0.8rem">Resumen del Pedido</div>
+          <div id="checkout-summary" style="font-size:0.83rem"></div>
+          <div style="border-top:1px solid var(--card-border);margin-top:1rem;padding-top:1rem;display:flex;justify-content:space-between;font-weight:700">
+            <span>Total</span>
+            <span class="cart-total-price" id="checkout-total">$0.00</span>
+          </div>
+        </div>
+        <div class="form-group"><label class="form-label">Nombre en la tarjeta</label><input class="form-input" placeholder="Como aparece en la tarjeta"></div>
+        <div class="form-group"><label class="form-label">Número de tarjeta</label>
+          <div style="position:relative"><input class="form-input" placeholder="4242 4242 4242 4242" maxlength="19" style="padding-right:70px"><span style="position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:0.68rem;color:var(--text-muted)">💳 VISA</span></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Vencimiento</label><input class="form-input" placeholder="MM / AA" maxlength="7"></div>
+          <div class="form-group"><label class="form-label">CVV</label><input class="form-input" type="password" placeholder="•••" maxlength="4"></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:1.5rem;font-size:0.7rem;color:var(--text-muted)">
+          🔒 <span>Pago seguro SSL — procesado por <strong style="color:#635BFF">Stripe</strong></span>
+        </div>
+        <div style="display:flex;gap:0.8rem;margin-bottom:1.5rem">
+          <button class="btn-outline" style="margin:0;padding:10px 14px;font-size:0.62rem" onclick="checkoutNext(1)">← Volver</button>
+          <button class="btn-primary" style="flex:1" onclick="checkoutNext(3)">Confirmar Pago 🔒</button>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap">
+          <span style="font-size:0.62rem;color:var(--text-muted)">Métodos:</span>
+          <span style="font-size:0.72rem;color:var(--pink)">VISA</span>
+          <span style="font-size:0.72rem;color:var(--blue-light)">Mastercard</span>
+          <span style="font-size:0.72rem;color:var(--text-muted)">AMEX</span>
+          <span style="font-size:0.72rem;color:var(--text-muted)">OXXO</span>
+        </div>
+      </div>
+
+      <div id="checkout-step3" style="display:none">
+        <div class="success-screen">
+          <div class="success-icon">✅</div>
+          <div class="success-title">¡Pedido Confirmado!</div>
+          <p class="success-desc">Gracias por tu compra en DAVE Fragrances. Tu fragancia será enviada en 1–3 días hábiles. Recibirás un email de confirmación.</p>
+          <div class="order-id">PEDIDO #DAV-<span id="order-num">2025001</span></div>
+          <div style="margin-top:2rem;display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+            <button class="btn-primary" onclick="closeCheckout();showPage('home')">Volver al Inicio</button>
+            <button class="btn-outline" style="margin:0">Ver Mis Pedidos</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="notif" id="notif"></div>
+
+<script>
+const products=[
+  {id:1,name:'AV GOLD',brand:'DAVE',cat:'hombre',price:1290,badge:'new',badgeLabel:'NUEVO',desc:'Ámbar oscuro, cedro y almizcle. La firma del hombre que lo da todo.',c1:'rgba(21,101,192,0.55)',c2:'rgba(233,30,140,0.25)',cap:'#1565C0',stars:'★★★★★'},
+  {id:2,name:'ETERNAL LOVE',brand:'DAVE x CD9',cat:'mujer',price:1490,oldPrice:1890,badge:'sale',badgeLabel:'OFERTA',desc:'Pétalos de rosa, jazmín y vainilla. La esencia de quien brilla con luz propia.',c1:'rgba(233,30,140,0.55)',c2:'rgba(240,106,176,0.25)',cap:'#E91E8C',stars:'★★★★★'},
+  {id:3,name:'CÓDIGO 9',brand:'DAVE',cat:'unisex',price:990,badge:'',badgeLabel:'',desc:'Notas marinas, bergamota y madera blanca. Libertad en cada gota.',c1:'rgba(66,165,245,0.5)',c2:'rgba(21,101,192,0.3)',cap:'#42A5F5',stars:'★★★★☆'},
+  {id:4,name:'DEJA VU',brand:'DAVE',cat:'edicion',price:2490,badge:'excl',badgeLabel:'EXCLUSIVO',desc:'Oud, patchouli y seda blanca. La colección para quienes no aceptan límites.',c1:'rgba(233,30,140,0.4)',c2:'rgba(21,101,192,0.4)',cap:'#9C27B0',stars:'★★★★★'},
+  {id:5,name:'BLUE ROMANCE',brand:'DAVE',cat:'hombre',price:1190,badge:'',badgeLabel:'',desc:'Tabaco suave, cuero y especias. Para los que conquistan la noche.',c1:'rgba(13,71,161,0.7)',c2:'rgba(233,30,140,0.2)',cap:'#0D47A1',stars:'★★★★☆'},
+  {id:6,name:'CODER PRINCESS',brand:'DAVE x CD9',cat:'mujer',price:1350,badge:'new',badgeLabel:'NUEVO',desc:'Neroli, lirio y musgo blanco. La fragancia que ilumina cualquier espacio.',c1:'rgba(233,30,140,0.35)',c2:'rgba(240,106,176,0.4)',cap:'#F06AB0',stars:'★★★★★'},
+  {id:7,name:'VILLALPANDO BLACK',brand:'DAVE',cat:'unisex',price:1090,badge:'',badgeLabel:'',desc:'Lima fresca, sal marina y coco. El verano en un frasco.',c1:'rgba(66,165,245,0.45)',c2:'rgba(233,30,140,0.2)',cap:'#29B6F6',stars:'★★★★☆'},
+  {id:8,name:'ALONSO ESSENCE',brand:'DAVE x CD9',cat:'edicion',price:2990,oldPrice:3490,badge:'excl',badgeLabel:'EXCLUSIVO',desc:'La esencia oficial de CD9. Cachemira, ámbar y sándalo. Edición numerada.',c1:'rgba(13,71,161,0.65)',c2:'rgba(233,30,140,0.35)',cap:'#1A237E',stars:'★★★★★'},
+];
+
+let cart=[];
+
+function bottle(p,size=65){
+  const h=Math.round(size*1.45);
+  return `<svg width="${size}" height="${h}" viewBox="0 0 ${size} ${h}" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="bg${p.id}" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="${p.c1}"/>
+        <stop offset="100%" stop-color="${p.c2}"/>
+      </linearGradient>
+    </defs>
+    <rect x="${Math.round(size*0.34)}" y="0" width="${Math.round(size*0.32)}" height="${Math.round(h*0.1)}" fill="${p.cap}" rx="2"/>
+    <rect x="${Math.round(size*0.28)}" y="${Math.round(h*0.09)}" width="${Math.round(size*0.44)}" height="${Math.round(h*0.2)}" fill="url(#bg${p.id})" stroke="rgba(255,255,255,0.25)" stroke-width="0.8" rx="1"/>
+    <rect x="${Math.round(size*0.1)}" y="${Math.round(h*0.29)}" width="${Math.round(size*0.8)}" height="${Math.round(h*0.68)}" fill="url(#bg${p.id})" stroke="rgba(255,255,255,0.2)" stroke-width="0.8" rx="2"/>
+    <rect x="${Math.round(size*0.18)}" y="${Math.round(h*0.62)}" width="${Math.round(size*0.64)}" height="${Math.round(h*0.1)}" fill="rgba(255,255,255,0.1)" rx="0"/>
+    <text x="50%" y="${Math.round(h*0.72)}" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="${Math.round(size*0.1)}" font-family="Playfair Display,serif" font-weight="700">${p.brand.split(' ')[0]}</text>
+  </svg>`;
+}
+
+function productCard(p){
+  return `<div class="product-card" onclick="openProduct(${p.id})">
+    <div class="product-img" style="background:linear-gradient(135deg,${p.c1},${p.c2},rgba(255,255,255,0.02))">
+      ${bottle(p,68)}
+      ${p.badge?`<div class="product-badge badge-${p.badge}">${p.badgeLabel}</div>`:''}
+      <button class="wishlist-btn" style="position:absolute;top:10px;right:10px;z-index:2" onclick="event.stopPropagation();toggleWish(this)">♡</button>
+    </div>
+    <div class="product-info">
+      <div class="product-brand">${p.brand}</div>
+      <div class="product-name">${p.name}</div>
+      <div class="product-desc">${p.desc}</div>
+      <div class="product-footer">
+        <div style="display:flex;align-items:baseline;gap:4px">
+          <span class="product-price">$${p.price.toLocaleString()}</span>
+          ${p.oldPrice?`<span class="product-price-old">$${p.oldPrice.toLocaleString()}</span>`:''}
+        </div>
+        <div style="display:flex;align-items:center">
+          <button class="add-btn" onclick="event.stopPropagation();addToCart(${p.id})" title="Agregar">+</button>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderProducts(id,filter='todo',limit=null){
+  let list=filter==='todo'?products:products.filter(p=>p.cat===filter);
+  if(limit) list=list.slice(0,limit);
+  document.getElementById(id).innerHTML=list.map(productCard).join('');
+}
+
+renderProducts('home-products','todo',4);
+renderProducts('catalog-products','todo');
+
+// hero bottle
+document.getElementById('hero-bottle').innerHTML=`<div style="position:relative;z-index:1">${bottle({id:0,brand:'DAVE',c1:'rgba(233,30,140,0.5)',c2:'rgba(21,101,192,0.4)',cap:'#E91E8C'},130)}</div>`;
+
+function filterProducts(btn,cat){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderProducts('catalog-products',cat);
+}
+
+function filterCat(cat){
+  showPage('catalog');
+  setTimeout(()=>{
+    const btns=document.querySelectorAll('.filter-btn');
+    btns.forEach(b=>b.classList.remove('active'));
+    const map={todo:0,hombre:1,mujer:2,unisex:3,edicion:4};
+    if(btns[map[cat]||0]) btns[map[cat]||0].classList.add('active');
+    renderProducts('catalog-products',cat);
+  },120);
+}
+
+function openProduct(id){
+  const p=products.find(x=>x.id===id);
+  if(!p) return;
+  document.getElementById('product-detail-content').innerHTML=`
+    <button class="back-btn" onclick="showPage('catalog')">← Volver al catálogo</button>
+    <div class="pd-grid">
+      <div class="pd-img" style="background:linear-gradient(135deg,${p.c1},${p.c2},rgba(255,255,255,0.02))">
+        ${bottle(p,120)}
+        ${p.badge?`<div class="product-badge badge-${p.badge}" style="bottom:16px;left:16px;top:auto">${p.badgeLabel}</div>`:''}
+      </div>
+      <div>
+        <div class="pd-brand">${p.brand}</div>
+        <h1 class="pd-name">${p.name}</h1>
+        <div class="pd-stars">${p.stars} <span style="color:var(--text-muted);font-size:0.75rem">(128 reseñas)</span></div>
+        <div class="pd-price">$${p.price.toLocaleString()} MXN${p.oldPrice?`<span style="font-size:1rem;color:var(--text-muted);-webkit-text-fill-color:var(--text-muted);text-decoration:line-through;margin-left:10px">$${p.oldPrice.toLocaleString()}</span>`:''}</div>
+        <p class="pd-desc">${p.desc}<br><br>Notas: Bergamota · Sándalo · Ámbar · Almizcle<br>Intensidad: Eau de Parfum 20% · Duración: 8–12 horas</p>
+        <div style="font-size:0.62rem;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:0.8rem">Tamaño</div>
+        <div class="pd-sizes">
+          <button class="size-btn active">30 ml</button>
+          <button class="size-btn">50 ml</button>
+          <button class="size-btn">100 ml</button>
+        </div>
+        <div class="pd-actions">
+          <button class="pd-add-btn" onclick="addToCart(${p.id});openCart()">+ Agregar al Carrito</button>
+          <button class="wishlist-btn" style="border:1px solid var(--card-border);width:46px;height:46px;font-size:1.2rem;display:flex;align-items:center;justify-content:center" onclick="toggleWish(this)">♡</button>
+        </div>
+        <div class="pd-notes">
+          <div class="pd-note"><div class="pd-note-icon">🚚</div><div class="pd-note-label">Envío gratis<br>>$800</div></div>
+          <div class="pd-note"><div class="pd-note-icon">↩</div><div class="pd-note-label">30 días<br>devolución</div></div>
+          <div class="pd-note"><div class="pd-note-icon">✓</div><div class="pd-note-label">100%<br>auténtico</div></div>
+        </div>
+      </div>
+    </div>`;
+  document.querySelectorAll('.size-btn').forEach(b=>{
+    b.onclick=function(){document.querySelectorAll('.size-btn').forEach(x=>x.classList.remove('active'));this.classList.add('active');}
+  });
+  showPage('product');
+}
+
+function addToCart(id){
+  const p=products.find(x=>x.id===id);
+  const ex=cart.find(x=>x.id===id);
+  if(ex) ex.qty++;else cart.push({...p,qty:1});
+  updateCart();
+  showNotif(`✅ ${p.name} agregado al carrito`);
+}
+
+function updateCart(){
+  const count=cart.reduce((s,x)=>s+x.qty,0);
+  document.getElementById('cart-count').textContent=count;
+  const total=cart.reduce((s,x)=>s+x.price*x.qty,0);
+  document.getElementById('cart-sub').textContent=`$${total.toLocaleString()} MXN`;
+  document.getElementById('cart-tot').textContent=`$${total.toLocaleString()} MXN`;
+  const list=document.getElementById('cart-items-list');
+  if(!cart.length){list.innerHTML='<div style="text-align:center;padding:3rem;color:var(--text-muted)"><div style="font-size:2.5rem;margin-bottom:1rem">🛒</div><p style="font-size:0.83rem">Tu carrito está vacío</p></div>';return;}
+  list.innerHTML=cart.map(item=>`
+    <div class="cart-item">
+      <div class="cart-item-img">${bottle(item,40)}</div>
+      <div class="cart-item-info">
+        <div class="cart-item-name">${item.name}</div>
+        <div class="cart-item-price">$${item.price.toLocaleString()} MXN</div>
+        <div class="cart-qty">
+          <button class="qty-btn" onclick="changeQty(${item.id},-1)">−</button>
+          <span class="qty-num">${item.qty}</span>
+          <button class="qty-btn" onclick="changeQty(${item.id},1)">+</button>
+          <button class="remove-btn" onclick="removeItem(${item.id})">Eliminar</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function changeQty(id,d){const i=cart.find(x=>x.id===id);if(!i)return;i.qty+=d;if(i.qty<=0)cart=cart.filter(x=>x.id!==id);updateCart();}
+function removeItem(id){cart=cart.filter(x=>x.id!==id);updateCart();}
+function openCart(){document.getElementById('cart-overlay').classList.add('open');document.getElementById('cart-sidebar').classList.add('open');updateCart();}
+function closeCart(){document.getElementById('cart-overlay').classList.remove('open');document.getElementById('cart-sidebar').classList.remove('open');}
+function openLogin(){document.getElementById('login-modal').classList.add('open');}
+function closeLogin(){document.getElementById('login-modal').classList.remove('open');}
+function showRegister(){document.getElementById('auth-title').textContent='Crea tu cuenta';document.getElementById('login-form').style.display='none';document.getElementById('register-form').style.display='block';}
+function showLogin(){document.getElementById('auth-title').textContent='Bienvenido de vuelta';document.getElementById('login-form').style.display='block';document.getElementById('register-form').style.display='none';}
+function doLogin(){closeLogin();showNotif('✅ Sesión iniciada correctamente');}
+function doRegister(){closeLogin();showNotif('🎉 ¡Bienvenido a DAVE Fragrances!');}
+function toggleWish(btn){btn.classList.toggle('active');btn.textContent=btn.classList.contains('active')?'♥':'♡';if(btn.classList.contains('active'))showNotif('♥ Agregado a favoritos');}
+
+function openCheckout(){
+  if(!cart.length){showNotif('⚠️ Tu carrito está vacío');return;}
+  closeCart();
+  const total=cart.reduce((s,x)=>s+x.price*x.qty,0);
+  document.getElementById('checkout-total').textContent=`$${total.toLocaleString()} MXN`;
+  document.getElementById('checkout-summary').innerHTML=cart.map(x=>`<div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="color:var(--text-muted)">${x.name} ×${x.qty}</span><span style="color:var(--pink)">$${(x.price*x.qty).toLocaleString()}</span></div>`).join('');
+  checkoutNext(1);
+  document.getElementById('checkout-modal').classList.add('open');
+}
+
+function closeCheckout(){document.getElementById('checkout-modal').classList.remove('open');}
+function checkoutNext(step){
+  [1,2,3].forEach(s=>{
+    document.getElementById(`checkout-step${s}`).style.display=s===step?'block':'none';
+    const el=document.getElementById(`step${s}`);
+    el.classList.remove('active','done');
+    if(s===step) el.classList.add('active');
+    else if(s<step) el.classList.add('done');
+  });
+  if(step===3){cart=[];updateCart();document.getElementById('order-num').textContent=Math.floor(Math.random()*9000+1000);}
+}
+
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));
+  const nav=document.getElementById('nav-'+id);
+  if(nav) nav.classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function showNotif(msg){
+  const n=document.getElementById('notif');
+  n.textContent=msg;n.classList.add('show');
+  setTimeout(()=>n.classList.remove('show'),3000);
+}
+
+document.addEventListener('click',e=>{
+  if(e.target.id==='login-modal') closeLogin();
+  if(e.target.id==='checkout-modal') closeCheckout();
+});
+</script>
