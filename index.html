@@ -514,7 +514,7 @@ footer{background:rgba(10,10,15,0.98);border-top:1px solid rgba(233,30,140,0.15)
         </div>
         <div style="display:flex;gap:0.8rem;margin-bottom:1.5rem">
           <button class="btn-outline" style="margin:0;padding:10px 14px;font-size:0.62rem" onclick="checkoutNext(1)">← Volver</button>
-          <button class="btn-primary" style="flex:1" onclick="checkoutNext(3)">Confirmar Pago 🔒</button>
+          <button class="btn-primary" style="flex:1" onclick="procesarPagoStripe()"> Pagar con Stripe 🔒 </button>
         </div>
         <div style="display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap">
           <span style="font-size:0.62rem;color:var(--text-muted)">Métodos:</span>
@@ -751,4 +751,60 @@ document.addEventListener('click',e=>{
   if(e.target.id==='login-modal') closeLogin();
   if(e.target.id==='checkout-modal') closeCheckout();
 });
+
+const stripe = Stripe(
+  'pk_test_51TeJJr4v8sSQFdnmYpspxsuWJ3cwHq4yQEBWxathy7ypk38U4Dtqx7L5jXXnbKpGC7OXQoc8PuLV3dBbfn4qs9xJ00SGLP36u9'
+);
+
+async function procesarPagoStripe() {
+
+  if (!cart.length) {
+    showNotif('Carrito vacío');
+    return;
+  }
+
+  try {
+
+    const response =
+      await fetch(
+        '/api/create-checkout-session',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type':
+              'application/json'
+          },
+          body: JSON.stringify({
+            items: cart
+          })
+        }
+      );
+
+    const session =
+      await response.json();
+
+    const result =
+      await stripe.redirectToCheckout({
+        sessionId: session.id
+      });
+
+    if (result.error) {
+      alert(result.error.message);
+    }
+
+  } catch (error) {
+
+    console.error(error);
+
+    showNotif(
+      'Error al iniciar el pago'
+    );
+  }
+}
+  
 </script>
+<script src="https://js.stripe.com/v3/"></script>
+
+</body>
+</html>  
+  
