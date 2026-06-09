@@ -542,7 +542,8 @@ footer{background:rgba(10,10,15,0.98);border-top:1px solid rgba(233,30,140,0.15)
 </div>
 
 <div class="notif" id="notif"></div>
-
+<script src="https://js.stripe.com/v3/"></script>
+<script src="script.js"></script>
 <script>
 const products=[
   {id:1,name:'AV GOLD',brand:'DAVE',cat:'hombre',price:1290,badge:'new',badgeLabel:'NUEVO',desc:'Ámbar oscuro, cedro y almizcle. La firma del hombre que lo da todo.',c1:'rgba(21,101,192,0.55)',c2:'rgba(233,30,140,0.25)',cap:'#1565C0',stars:'★★★★★'},
@@ -803,7 +804,5 @@ async function procesarPagoStripe() {
 }
 const stripe = Stripe('pk_test_51TeJJr4v8sSQFdnmYpspxsuWJ3cwHq4yQEBWxathy7ypk38U4Dtqx7L5jXXnbKpGC7OXQoc8PuLV3dBbfn4qs9xJ00SGLP36u9');
 </script>
-<script src="https://js.stripe.com/v3/"></script>
-<script src="script.js"></script>
 </body>
 </html>
